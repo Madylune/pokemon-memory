@@ -9,6 +9,7 @@ import isEmpty from 'lodash/fp/isEmpty'
 import find from 'lodash/fp/find'
 import { POKEMON_LIST } from '../api'
 import { shuffleCards } from '../utils'
+import { BREAKPOINTS } from '../theme'
 
 const StyledGrid = styled.div`
   display: flex;
@@ -16,7 +17,12 @@ const StyledGrid = styled.div`
   justify-content: center;
   padding: 10px 50px;
   margin: auto;
-  width: 70%;
+  width: 60%;
+
+  @media (max-width: ${BREAKPOINTS.lg}) {
+    padding: 10px;
+    width: 100%;
+  }
 `
 
 const StyledCard = styled.div`
@@ -27,6 +33,11 @@ const StyledCard = styled.div`
   width: 150px;
   margin: 10px;
   cursor: pointer;
+
+  @media (max-width: ${BREAKPOINTS.md}) {
+    height: 100px;
+    width: 100px;
+  }
 `
 
 const StyledImg = styled.img`

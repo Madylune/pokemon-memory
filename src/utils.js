@@ -8,7 +8,7 @@ import map from 'lodash/fp/map'
 export const shuffleCards = cards => {
   const originals = flow(
     shuffle,
-    take(10),
+    take(12),
   )(cards)
   const clones = clone(originals)
   const mergedCards = flow(
