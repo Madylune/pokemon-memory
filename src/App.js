@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import styled from 'styled-components'
+import PokemonGrid from './components/PokemonGrid'
 
-function App() {
+const StyledApp = styled.div`
+  text-align: center;
+`
+
+const StyledLogo = styled.img`
+  height: 100px;
+  margin-top: 10px;
+`
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <StyledApp>
+      <StyledLogo src={require('./assets/logo.png')} alt="Logo Pokemon Memery" />
+      <PokemonGrid />
+    </StyledApp>
+  )
 }
 
-export default App;
+export default App
