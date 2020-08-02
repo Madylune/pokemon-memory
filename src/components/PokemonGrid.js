@@ -74,7 +74,7 @@ const PokemonGrid = () => {
     }
   }, [flippedCard])
   
-  size(cards) === size(pairs) && console.log("Gagné !")
+  size(cards) === size(pairs) && alert("Gagné !")
 
   return (
     <StyledGrid>
