@@ -7,6 +7,7 @@ import uniqBy from 'lodash//fp/uniqBy'
 import flow from 'lodash/fp/flow'
 import isEmpty from 'lodash/fp/isEmpty'
 import find from 'lodash/fp/find'
+import uniq from 'lodash/fp/uniq'
 import { POKEMON_LIST } from '../api'
 import { shuffleCards } from '../utils'
 import { BREAKPOINTS } from '../theme'
@@ -58,8 +59,8 @@ const PokemonGrid = () => {
   const flipCard = useCallback(
     card => 
       size(flippedCard) < 2
-        ? setFlipCard([ ...flippedCard, card ])
-        : setFlipCard([ card ])
+        ? setFlipCard(uniq([ ...flippedCard, card ]))
+        : setFlipCard(uniq([ card ]))
     
   )
 
@@ -72,8 +73,10 @@ const PokemonGrid = () => {
 
       if (isPair) {
         isEmpty(pairs) 
-          ? setPairs(flippedCard) 
-          : setPairs([ ...flippedCard, ...pairs ])
+          ? setPairs(uniq(flippedCard))
+          : setPairs(uniq([ ...flippedCard, ...pairs ]))
+
+        setFlipCard([])
       }
     }
   }, [flippedCard])
