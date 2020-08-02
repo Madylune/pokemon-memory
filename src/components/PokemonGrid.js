@@ -10,6 +10,7 @@ import find from 'lodash/fp/find'
 import { POKEMON_LIST } from '../api'
 import { shuffleCards } from '../utils'
 import { BREAKPOINTS } from '../theme'
+import GameOver from './GameOver'
 
 const StyledGrid = styled.div`
   display: flex;
@@ -19,8 +20,9 @@ const StyledGrid = styled.div`
   margin: auto;
   width: 60%;
 
-  @media (max-width: ${BREAKPOINTS.lg}) {
-    padding: 10px;
+  @media (max-width: ${BREAKPOINTS.mg}) {
+    padding: 0;
+    margin: 0;
     width: 100%;
   }
 `
@@ -35,8 +37,9 @@ const StyledCard = styled.div`
   cursor: pointer;
 
   @media (max-width: ${BREAKPOINTS.md}) {
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
+    margin: 5px;
   }
 `
 
@@ -50,6 +53,7 @@ const cards = shuffleCards(POKEMON_LIST)
 const PokemonGrid = () => {
   const [ flippedCard, setFlipCard ] = useState([])
   const [ pairs, setPairs ] = useState([])
+  const [ isGameOver, setGameOver ] = useState(false)
 
   const flipCard = useCallback(
     card => 
@@ -73,20 +77,27 @@ const PokemonGrid = () => {
       }
     }
   }, [flippedCard])
-  
-  size(cards) === size(pairs) && alert("Gagné !")
+
+  useEffect(() => {
+    if (size(cards) === size(pairs)) {
+      setGameOver(true)
+    }
+  }, [pairs])
 
   return (
-    <StyledGrid>
-      {map(pokemon => 
-          <StyledCard key={pokemon.id} onClick={() => flipCard(pokemon)} flip={includes(pokemon.id, flippedCard)}>
-            {includes(pokemon, flippedCard) || find({ id: pokemon.id }, pairs)
-              ? <StyledImg src={require(`../assets/${pokemon.picture}`)} alt={pokemon.name} />
-              : <StyledImg src={require(`../assets/pokeball.svg`)} alt="Pokeball" />
-            }
-          </StyledCard>
-      , cards)}
-    </StyledGrid>
+    <>
+      <StyledGrid>
+        {map(pokemon => 
+            <StyledCard key={pokemon.id} onClick={() => flipCard(pokemon)} flip={includes(pokemon.id, flippedCard)}>
+              {includes(pokemon, flippedCard) || find({ id: pokemon.id }, pairs)
+                ? <StyledImg src={require(`../assets/${pokemon.picture}`)} alt={pokemon.name} />
+                : <StyledImg src={require(`../assets/pokeball.svg`)} alt="Pokeball" />
+              }
+            </StyledCard>
+        , cards)}
+      </StyledGrid>
+      {isGameOver && <GameOver />}
+    </>
   )
 }
 
